@@ -19,11 +19,10 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-xl-8">
-
+            <div class="col-md-6 offset-md-3">
                 <h1 class="display-4 text-center mb-5">Weight Converter</h1>
-
-                <form action="">
+<!-- Text Input -->
+                <form>
                     <div class="form-group">
                         <input 
                         id="lbsInput"
@@ -32,34 +31,48 @@
                         >
                     </div>
                 </form>
+<!-- Card Start-->
+                    <div id="output">
 
-                <div id="output">
+                        <div class="card text-white bg-primary mb-2">
+                            <div class="card-block m-3">
+                                <h5 class="card-title">Gram: </h5>
+                                <div id="gramsOutput"></div>
+                            </div>
+                        </div>
 
-                    <div class="card text-white bg-primary mb-2">
-                        <div class="card-block">
-                                <h5 class="card-title m-3">Gram: </h5>
-                            <div id="gramsOutput"></div>
+                        <div class="card text-white bg-secondary mb-2">
+                            <div class="card-block m-3">
+                                <h5 class="card-title">Kilograms: </h5>
+                                <div id="kgOutput"></div>
+                            </div>
+                        </div>
+
+                        <div class="card text-white bg-success mb-2">
+                            <div class="card-block m-3">
+                                <h5 class="card-title">Ounces:</h5>
+                                <div id="ozOutput"></div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="card text-white bg-secondary mb-2">
-                        <div class="card-block">
-                                <h5 class="card-title m-3">Kilograms: </h5>
-                            <div id="kgOutput"></div>
-                        </div>
-                    </div>
-
-                    <div class="card text-white bg-success">
-                            <h5 class="card-title m-3" >Ounces: </h5>
-                            <div id="ozOutput"></div>
-                        </div>
-                    </div>
-
-
+<!-- Card End-->
                 </div>
-
             </div>
         </div>
     </div>
+
+<!-- Script -->
+    <script>
+        document.getElementById('output').style.visibility = 'hidden';
+        document.getElementById('lbsInput').addEventListener('input', function(e){
+            let lbs = e.target.value;
+            document.getElementById('gramsOutput').innerHTML = lbs/0.0022046;
+            document.getElementById('kgOutput').innerHTML = lbs/2.2046;
+            document.getElementById('ozOutput').innerHTML = lbs*16;
+            document.getElementById('output').style.visibility = 'visible';
+        });
+    </script>
+
+
 </body>
 </html>
