@@ -20,14 +20,33 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h1 class="display-4 text-center mb-5">Weight Converter</h1>
+                <h1 class="display-4 mb-2">Weight Converter</h1>
+                <p class="display-6">Select Weight Unit</p>
+<!-- Radio Buttons -->
+    <div class="radio-buttons mb-3">
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="unitTypeRadio" class="custom-control-input" onclick="check();" value="pounds">
+            <label class="custom-control-label" for="customRadio1">Pounds</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="unitTypeRadio" class="custom-control-input" onclick="check();" value="kilograms">
+            <label class="custom-control-label" for="customRadio2">Kilograms</label>
+        </div>
+        <div class="custom-control custom-radio">
+                <input type="radio" id="customRadio3" name="unitTypeRadio" class="custom-control-input" onclick="check();" value="ounces">
+                <label class="custom-control-label" for="customRadio3">Ounces</label>
+            </div>
+
+    </div>
+
+
 <!-- Text Input -->
                 <form>
-                    <div class="form-group">
+                    <div class="form-group" id="inputBox">
                         <input 
-                        id="lbsInput"
+                        id="Input"
                         type="number" 
-                        class="form-control form-control-lg" placeholder="Enter Pounds.."
+                        class="form-control form-control-lg" placeholder="Please Select Weight Unit"
                         >
                     </div>
                 </form>
@@ -36,22 +55,22 @@
 
                         <div class="card text-white bg-primary mb-2">
                             <div class="card-block m-3">
-                                <h5 class="card-title">Gram: </h5>
-                                <div id="gramsOutput"></div>
+                                <h5 class="card-title" id="output-1-title">Gram: </h5>
+                                <div id="output-1"></div>
                             </div>
                         </div>
 
                         <div class="card text-white bg-secondary mb-2">
                             <div class="card-block m-3">
-                                <h5 class="card-title">Kilograms: </h5>
-                                <div id="kgOutput"></div>
+                                <h5 class="card-title" id="output-2-title">Kilograms: </h5>
+                                <div id="output-2"></div>
                             </div>
                         </div>
 
                         <div class="card text-white bg-success mb-2">
                             <div class="card-block m-3">
-                                <h5 class="card-title">Ounces:</h5>
-                                <div id="ozOutput"></div>
+                                <h5 class="card-title" id="output-3-title">Ounces:</h5>
+                                <div id="output-3"></div>
                             </div>
                         </div>
                     </div>
@@ -63,14 +82,87 @@
 
 <!-- Script -->
     <script>
-        document.getElementById('output').style.visibility = 'hidden';
-        document.getElementById('lbsInput').addEventListener('input', function(e){
-            let lbs = e.target.value;
-            document.getElementById('gramsOutput').innerHTML = lbs/0.0022046;
-            document.getElementById('kgOutput').innerHTML = lbs/2.2046;
-            document.getElementById('ozOutput').innerHTML = lbs*16;
-            document.getElementById('output').style.visibility = 'visible';
-        });
+        const TextInput = document.getElementById('Input');
+        const OutPut_1 = document.getElementById('output-1');
+        const OutPut_2 = document.getElementById('output-2');
+        const OutPut_3 = document.getElementById('output-3');
+        const OutPut_1_title = document.getElementById('output-1-title');
+        const OutPut_2_title = document.getElementById('output-2-title');
+        const OutPut_3_title = document.getElementById('output-3-title');
+
+
+        check = () => {
+            let unitType = document.getElementsByName("unitTypeRadio");
+            let leng = unitType.length;
+
+            for(i=0; i<leng; i++){
+                if(unitType[i].checked){
+                    if(unitType[i].value === "pounds"){
+                        pounds();
+
+                    } else if(unitType[i].value === "kilograms"){
+                        kilograms();
+                        
+                    } else if(unitType[i].value === "ounces"){
+                        Ounces();
+                    }
+                }
+            }
+        };
+
+        resetValues = () => {
+            TextInput.value = "";
+            OutPut_1.innerHTML = "";
+            OutPut_2.innerHTML = "";
+            OutPut_3.innerHTML = "";
+        }
+
+        
+        
+        pounds = () => {
+            resetValues();
+            TextInput.placeholder = "Pounds"
+            OutPut_1_title.innerText = "Grams: "
+            OutPut_2_title.innerText = "Kilograms: "
+            OutPut_3_title.innerText = "Ounces: "
+            TextInput.addEventListener('input', function(e){
+                let lbs = e.target.value;
+                OutPut_1.innerHTML = lbs/0.0022046+" g";
+                OutPut_2.innerHTML = lbs/2.2046+" kg";
+                OutPut_3.innerHTML = lbs*16+" oz";
+            });
+        };  
+
+        kilograms = () => {
+            resetValues();
+            TextInput.placeholder = "Kilograms"
+            OutPut_1_title.innerText = "Grams: "
+            OutPut_2_title.innerText = "Pounds: "
+            OutPut_3_title.innerText = "Ounces: "
+            TextInput.addEventListener('input', function(e){
+                let kg = e.target.value;
+                OutPut_1.innerHTML = kg*1000+" g";
+                OutPut_2.innerHTML = kg*2.20462+" lbs";
+                OutPut_3.innerHTML = kg*35.274+" oz";
+            });
+        };
+
+        Ounces = () => {
+            resetValues();
+            TextInput.placeholder = "Ounces"
+            OutPut_1_title.innerText = "Grams: "
+            OutPut_2_title.innerText = "Pounds: "
+            OutPut_3_title.innerText = "Kilograms: "
+            TextInput.addEventListener('input', function(e){
+                let oz = e.target.value;
+                OutPut_1.innerHTML = oz*28.3495+" g";
+                OutPut_3.innerHTML = oz*0.0625+" lbs";
+                OutPut_2.innerHTML = oz*0.0283495+" kg";
+            });
+        }
+
+    
+
     </script>
 
 
